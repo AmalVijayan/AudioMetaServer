@@ -64,6 +64,7 @@ class AudioViewSet(viewsets.ModelViewSet):
 
         else:
             aud_type =  self.kwargs['audioFileType'].lower()
+            
             if aud_type == 'song':
                 return audio_files_api.serializers.SongSerializer
 

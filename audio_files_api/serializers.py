@@ -15,11 +15,11 @@ class SongSerializer(serializers.ModelSerializer):
 
 class PodcastSerializer(serializers.ModelSerializer):
     class Meta:
-        model = audio_files.models.Song
+        model = audio_files.models.Podcast
         fields = '__all__'
 
 class AudioBookSerializer(serializers.ModelSerializer):
     class Meta:
-        model = audio_files.models.Song
+        model = audio_files.models.AudioBook
         fields = '__all__'
 
