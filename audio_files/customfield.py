@@ -34,8 +34,12 @@ class CommaSeparatedValuesField(models.TextField):
         assert(isinstance(value, list) or isinstance(value, tuple))
         return self.token.join([str(s) for s in value])
 
+    # def value_to_string(self, obj):
+    #     value = self._get_val_from_obj(obj)
+    #     return self.get_db_prep_value(value)
+        
     def value_to_string(self, obj):
-        value = self._get_val_from_obj(obj)
-        return self.get_db_prep_value(value)
+        value = self.value_from_object(obj)
+        return self.get_prep_value(value)
     
    

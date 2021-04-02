@@ -13,8 +13,9 @@ router = DefaultRouter()
 urlpatterns = [
     path('api-auth', include('rest_framework.urls', namespace='rest_framework')),
     
-    path('<str:audioFileType>/', audio_files_api.views.AudioViewSet.as_view({'get': 'list', 'post':'list'}), name='audio_file_create_list'),
-    path('<str:audioFileType>/<int:pk>/',  audio_files_api.views.AudioViewSet.as_view( {'get': 'retrieve', 'post':'update', 'delete':'destroy'} ) , name='audio_file_rud'),
+    path('<str:audioFileType>/', audio_files_api.views.AudioViewSet.as_view({'get': 'list','post':'create'}), name='audio_file_create_list'),
+    path('<str:audioFileType>/<int:pk>/',  audio_files_api.views.AudioViewSet.as_view( {'get': 'retrieve', 'put':'update', 'delete':'destroy'} ) , name='audio_file_rud'),
+    path('upload_audio/', audio_files_api.views.AudioViewSet.as_view({'post':'create'}), name='audio_file_create'),
 
     # Use the `get_schema_view()` helper to add a `SchemaView` to project URLs.
     #   * `title` and `description` parameters are passed to `SchemaGenerator`.
