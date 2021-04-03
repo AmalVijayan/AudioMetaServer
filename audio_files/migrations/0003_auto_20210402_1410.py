@@ -26,9 +26,5 @@ class Migration(migrations.Migration):
                 'abstract': False,
             },
         ),
-        migrations.AlterField(
-            model_name='podcast',
-            name='participants',
-            field=audio_files.customfield.CommaSeparatedValuesField(blank=True, null=True, validators=[audio_files.models.validate_participants]),
-        ),
+
     ]
