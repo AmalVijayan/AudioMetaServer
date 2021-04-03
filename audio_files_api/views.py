@@ -21,15 +21,13 @@ class AudioViewSet(viewsets.ModelViewSet):
         aud_type =  self.kwargs['audioFileType'].lower()
 
         if aud_type == 'song':
-            queryset = audio_files.models.Song.objects.all()
+            return audio_files.models.Song.objects.all()
 
         elif aud_type == 'podcast':
-            queryset = audio_files.models.Podcast.objects.all()
+            return audio_files.models.Podcast.objects.all()
 
         elif aud_type == 'audiobook':
-            queryset = audio_files.models.AudioBook.objects.all()
-
-        return queryset
+            return audio_files.models.AudioBook.objects.all()
 
     def get_serializer_class(self):
         
@@ -46,6 +44,9 @@ class AudioViewSet(viewsets.ModelViewSet):
 
         elif aud_type == 'audiobook':
             return audio_files_api.serializers.AudioBookSerializer
+        
+        # Default  serializer
+        return audio_files_api.serializers.SongSerializer
 
 
     def create(self, request, *args, **kwargs):
