@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
                 ('duration', models.PositiveIntegerField()),
                 ('uploadedtime', models.DateTimeField(validators=[audio_files.models.validate_datetime])),
                 ('host', models.CharField(max_length=100)),
-                ('participants', models.TextField(blank=True, null=True)),
+                ('participants', models.TextField(blank=True, null=True, validators=[audio_files.models.validate_participants])),
             ],
             options={
                 'abstract': False,
