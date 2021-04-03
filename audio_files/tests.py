@@ -30,7 +30,7 @@ class SongTests(TestCase):
     # Negative  test cases
     def test_past_datetime(self):
         """
-        name succeeds validation if it is a str
+        uploadedtime fails validation if it is a past datetime
         """
         with self.assertRaises(ValidationError):
             validate_datetime(timezone.now()-datetime.timedelta(seconds=3))
@@ -39,7 +39,7 @@ class SongTests(TestCase):
 
 class PodcastTests(TestCase):
 
-    #Validating datetime field
+    #Validating participants field
     print("testing participants validation ...")
 
     # Positive test case 
@@ -63,7 +63,6 @@ class PodcastTests(TestCase):
             self.assertRaises(ValidationError)
             
     # Negative  test cases
-
     def test_participants_exceeds(self):
         """
         Participants fails validation if it is contains more than 10 names
