@@ -1,0 +1,15 @@
+Method,audioFileType,name,duration,uploadedtime,Expected
+create_song,None,Not None,300,Now,400
+create_song,song,None,300,Now,400
+create_song,song,Not None,None,Now,400
+create_song,song,Not None,300,None,400
+create_song,song,_gt 100,300,Now,400
+create_song,song,Not None,300,Past,400
+create_song,song,Not None,300,Now,201
+update_song,None,Not None,300,Now,400
+update_song,song,None,300,Now,400
+update_song,song,Not None,None,Now,400
+update_song,song,Not None,300,None,400
+update_song,song,_gt 100,300,Now,400
+update_song,song,Not None,300,Past,400
+update_song,song,Not None,300,Now,200

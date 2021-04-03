@@ -76,9 +76,13 @@ class AudioViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         print("\n\n ---------create---------- \n\n")
-        print(request.data['audioFileMetadata'])
+        print(type(request.data))
+        # print(request.data['audioFileMetadata'])
         print("\n\n ------------------- \n\n")
-        aud_type = request.data['audioFileType'].lower()
+        try:
+            aud_type = request.data['audioFileType'].lower()
+        except Exception as e:
+            return Response({"msg":"audioFileType filed required or incorrect!", "error":f"{e}"}, status=status.HTTP_400_BAD_REQUEST)
         payload = request.data['audioFileMetadata']
         serializer = self.get_serializer(data=payload)
         print(" >> SERIALIZER >> : ",serializer)
@@ -92,13 +96,16 @@ class AudioViewSet(viewsets.ModelViewSet):
         return serializer.save()
 
     def update(self, request, pk=None, *args, **kwargs):
-        print(f"\n\n ---------Update---------- pk : {pk}\n\n")
+        # print(f"\n\n ---------Update---------- pk : {pk}\n\n")
         print(request.data['audioFileMetadata'])
-        print("\n\n ------------------- \n\n")
-        aud_type = request.data['audioFileType'].lower()
+        # print("\n\n ------------------- \n\n")
+        try:
+            aud_type = request.data['audioFileType'].lower()
+        except Exception as e:
+            return Response({"msg":"audioFileType filed required or incorrect!", "error":f"{e}"}, status=status.HTTP_400_BAD_REQUEST)
         payload = request.data['audioFileMetadata']
         serializer = self.get_serializer(data=payload)
-        print(" >> SERIALIZER >> : ",serializer)
+        # print(" >> SERIALIZER >> : ",serializer)
         serializer.is_valid(raise_exception=True)
         if aud_type == 'song':
             instance = get_object_or_404(audio_files.models.Song, pk=pk)
