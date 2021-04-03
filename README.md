@@ -7,7 +7,7 @@
 
 Clone  
 ```bash
-git clone https://github.com/AmalVijayan/DjangoTest.git
+git clone https://github.com/AmalVijayan/AudioMetaServer.git
 ```
 
 Create virtualenv
