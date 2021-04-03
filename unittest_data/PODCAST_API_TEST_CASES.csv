@@ -6,7 +6,7 @@ create_podcast,podcast,Not None,300,None,Not None,Not None,400
 create_podcast,podcast,_gt 100,300,Now,None,Not None,400
 create_podcast,podcast,Not None,300,Past,Not None,None,400
 create_podcast,podcast,Not None,300,Past,_gt 100,Not None,400
-create_podcast,podcast,Not None,300,Now,Not None,_gt 10,201
+create_podcast,podcast,Not None,300,Now,Not None,_gt 10,400
 create_podcast,podcast,Not None,300,Now,Not None,Not None,201
 update_podcast,None,Not None,300,Now,Not None,Not None,400
 update_podcast,podcast,None,300,Now,Not None,Not None,400
@@ -15,5 +15,5 @@ update_podcast,podcast,Not None,300,None,Not None,Not None,400
 update_podcast,podcast,_gt 100,300,Now,None,Not None,400
 update_podcast,podcast,Not None,300,Past,Not None,None,400
 update_podcast,podcast,Not None,300,Past,_gt 100,Not None,400
-update_podcast,podcast,Not None,300,Now,Not None,_gt 10,200
+update_podcast,podcast,Not None,300,Now,Not None,_gt 10,400
 update_podcast,podcast,Not None,300,Now,Not None,Not None,200

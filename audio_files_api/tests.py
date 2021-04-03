@@ -7,11 +7,11 @@ import json
 import audio_files.models
 import pandas as pd
 import datetime 
-
+from random import randint
 
 # Create your tests here.
 
-print("\n Initiating API Test")
+print("\n\n ++++++++++++++++++++++++++++++++ Initiating API Test ++++++++++++++++++++++++++++++++++++++++\n\n")
 
 
 class SongTest(APITestCase):
@@ -335,6 +335,7 @@ class PodcastTest(APITestCase):
         # The following dict maps the values from the csv test cases to prapare the payload
         mapping = {'None': None, 'Podcast' : 'podcast', 'Not None' : 'The Mindset Mentor', '_gt 100' : '93fbec92b2c409188e241789535fbb3147c98f314ea5ed1870cac55c37c1cc4b3fa3841f96dace38c1d45b325af473118d0fd985d35114b4b09'}
 
+        participants_mapper = {'None': None,  'Not None' : [str(randint(10000, 900000)) for i in range(10)],  '_gt 10' : [str(randint(10000, 900000)) for i in range(12)] }
         # Reading test cases and untitest from csv
         df_test_cases = pd.read_csv('unittest_data/PODCAST_API_TEST_CASES.csv')
         df_test_cases = df_test_cases[df_test_cases['Method'] == 'create_podcast']
@@ -358,8 +359,8 @@ class PodcastTest(APITestCase):
                         "name": mapping[row['name']], 
                         "duration": row['duration'],
                         "uploadedtime": str(uploadedtime),
-                        "host": mapping[row['host']]
-                       # "participants": mapping[row['participants']]
+                        "host": mapping[row['host']],
+                        "participants": participants_mapper[row['participants']]
                         }
                     }
 
@@ -381,8 +382,8 @@ class PodcastTest(APITestCase):
         podcast = audio_files.models.Podcast.objects.create(name="The Mindset Mentor",
                                                         duration=104444,
                                                         uploadedtime=timezone.now(),
-                                                        host="Rob Dial and Kast Media")
-                                                        # participants=[])     
+                                                        host="Rob Dial and Kast Media",
+                                                        participants=str([str(randint(10000, 900000)) for i in range(10)]))     
          
         url = f"/podcast/{podcast.id}/"
 
@@ -401,14 +402,14 @@ class PodcastTest(APITestCase):
         podcast1 = audio_files.models.Podcast.objects.create(name="The Psychology of Money",
                                                          duration=10444,
                                                          uploadedtime=timezone.now(),
-                                                         host="Jonny Ranne")
-                                                         # participants=[])  
+                                                         host="Jonny Ranne",
+                                                         participants=str([str(randint(10000, 900000)) for i in range(10)])) 
 
         podcast2 = audio_files.models.Podcast.objects.create(name="The Subtle Art of Not Giving a F*ck",
                                                         duration=122230,
                                                         uploadedtime=timezone.now(),
-                                                        host="Mark Manson")
-                                                       # participants=[])               
+                                                        host="Mark Manson",
+                                                        participants=str([str(randint(10000, 900000)) for i in range(10)])) 
         url = f"/podcast/"
 
         response = self.client.get(url)
@@ -424,6 +425,7 @@ class PodcastTest(APITestCase):
     
         # The following dict maps the values from the csv test cases to prapare the payload
         mapping = {'None': None, 'Podcast' : 'podcast', 'Not None' : 'The Psychology of Money', '_gt 100' : '93fbec92b2c409188e241789535fbb3147c98f314ea5ed1870cac55c37c1cc4b3fa3841f96dace38c1d45b325af473118d0fd985d35114b4b09'}
+        participants_mapper = {'None': None,  'Not None' : [str(randint(10000, 900000)) for i in range(10)],  '_gt 10' : [str(randint(10000, 900000)) for i in range(12)] }
 
         # Reading test cases and untitest from csv
         df_test_cases = pd.read_csv('unittest_data/PODCAST_API_TEST_CASES.csv')
@@ -454,13 +456,14 @@ class PodcastTest(APITestCase):
                         "name": mapping[row['name']], 
                         "duration": row['duration'],
                         "uploadedtime": str(uploadedtime),
-                        "host": mapping[row['host']]
-                        # "particioants": mapping[row['participants']]
+                        "host": mapping[row['host']],
+                        "participants": participants_mapper[row['participants']]
                         }
                 }
                 url = f"/podcast/{podcast.id}/"
 
                 response = self.client.put(url, headers= {'Content-Type': 'application/json'}, data=payload, format='json')
+
                 self.assertEqual(
                     response.status_code, row['Expected'],
                     msg={'url': url, 'request_payload': payload, 'response': response.json()}
@@ -468,7 +471,7 @@ class PodcastTest(APITestCase):
 
     def test_delete_podcast(self):
         """
-        This test ensures that we can delete a song object
+        This test ensures that we can delete a podcast object
         """
 
         print("\n Testing delete_podcast ...")
@@ -476,8 +479,8 @@ class PodcastTest(APITestCase):
         podcast = audio_files.models.Podcast.objects.create(name="The Subtle Art of Not Giving a F*ck",
                                                         duration=122230,
                                                         uploadedtime=timezone.now(),
-                                                        host="Mark Manson")
-                                                        # participants=[])           
+                                                        host="Mark Manson",
+                                                        participants=str(["Ajith","Rana","Milimg"]))
         url = f"/podcast/{podcast.id}/"
         response = self.client.delete(url)
         self.assertEqual(

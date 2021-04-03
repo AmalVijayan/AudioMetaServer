@@ -1,6 +1,7 @@
 from rest_framework import serializers
 import audio_files.models
 from django.conf import settings
+import ast
 
 
 class SongSerializer(serializers.ModelSerializer):
@@ -13,7 +14,27 @@ class SongSerializer(serializers.ModelSerializer):
                   'uploadedtime'
                  )
 
+
 class PodcastSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = audio_files.models.Podcast
+        fields = '__all__'
+
+class StringListField(serializers.ListField):
+    child = serializers.CharField()
+
+class PodcastRetrieveSerializer(serializers.ModelSerializer):
+
+    participants = serializers.SerializerMethodField('get_pList')
+
+    def get_pList(self, podcast):
+        participants_text = podcast.participants
+        if participants_text:
+            participants_list = ast.literal_eval(podcast.participants)
+            serializer = StringListField(participants_list)
+            return participants_list
+
     class Meta:
         model = audio_files.models.Podcast
         fields = '__all__'
