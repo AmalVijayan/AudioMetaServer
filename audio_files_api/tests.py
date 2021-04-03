@@ -1,7 +1,6 @@
 import os
 from django.urls import reverse
 from django.utils import timezone
-from rest_framework import status
 from rest_framework.test import APITestCase
 import json
 import audio_files.models
@@ -395,7 +394,7 @@ class PodcastTest(APITestCase):
 
     def test_list_podcasts(self):
         """
-        This test ensures that we can list all audiobooks
+        This test ensures that we can list all podcasts
         """
         print("\n Testing list_podcast ...")
 

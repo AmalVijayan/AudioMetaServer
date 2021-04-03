@@ -9,7 +9,7 @@ import ast
 
 # A filed validater for determinig if the date entered is a future date or not (Only allows future dates)
 def validate_datetime(value):
-    if value < ( timezone.now() + datetime.timedelta(seconds=2) ) : # Compensating 2 seconds for network or user-action latency
+    if value < ( timezone.now() - datetime.timedelta(seconds=2) ) : # Compensating 2 seconds for network or user-action latency
         raise ValidationError("The date & time cannot be in the past!")
     return value
     
