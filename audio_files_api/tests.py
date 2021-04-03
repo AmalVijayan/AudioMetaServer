@@ -9,11 +9,7 @@ import pandas as pd
 import datetime 
 
 
-# Base directory for fetchign test data
-base_dir = os.path.dirname(os.path.dirname(__file__))
-
 # Create your tests here.
-
 
 print("\n Initiating API Test")
 
@@ -63,6 +59,45 @@ class SongTest(APITestCase):
                     msg={'url': url, 'request_payload': payload, 'response': response.json()}
                 )
 
+    def test_retrieve_song(self):
+        """
+        This test ensures that we can retrieve the details of a particular song
+        """
+        print("\n Testing retrieve_song ...")
+
+        song1 = audio_files.models.Song.objects.create(name="Micheal Jackson | Beat-it",
+                                                        duration=230,
+                                                        uploadedtime=timezone.now())     
+         
+        url = f"/song/{song1.id}/"
+
+        response = self.client.get(url)
+        self.assertEqual(
+            response.status_code, 200,
+            msg={'url': url, 'response': response.json()}
+        )
+
+    def test_list_song(self):
+        """
+        This test ensures that we can list all songs
+        """
+        print("\n Testing list_song ...")
+
+        song1 = audio_files.models.Song.objects.create(name="Micheal Jackson | Beat-it",
+                                                        duration=230,
+                                                        uploadedtime=timezone.now())   
+
+        song2 = audio_files.models.Song.objects.create(name="Micheal Jackson | Billie Jean",
+                                                        duration=230,
+                                                        uploadedtime=timezone.now())             
+        url = f"/song/"
+
+        response = self.client.get(url)
+        self.assertEqual(
+            response.status_code, 200,
+            msg={'url': url, 'response': response.json()}
+        )
+
     def test_update_songs(self):
         """
         This test ensures that we can update an existing song object
@@ -109,24 +144,6 @@ class SongTest(APITestCase):
                     msg={'url': url, 'request_payload': payload, 'response': response.json()}
                 )
 
-    def test_retrieve_song(self):
-        """
-        This test ensures that we can retrieve the details of a particular song
-        """
-        print("\n Testing retrieve_song ...")
-
-        song1 = audio_files.models.Song.objects.create(name="Micheal Jackson | Beat-it",
-                                                        duration=230,
-                                                        uploadedtime=timezone.now())     
-         
-        url = f"/song/{song1.id}/"
-
-        response = self.client.get(url)
-        self.assertEqual(
-            response.status_code, 200,
-            msg={'url': url, 'response': response.json()}
-        )
-
     def test_delete_song(self):
         """
         This test ensures that we can delete a song object
@@ -138,7 +155,6 @@ class SongTest(APITestCase):
                                                         duration=230,
                                                         uploadedtime=timezone.now())            
         url = f"/song/{song1.id}/"
-        print("url ::: ", url)
         response = self.client.delete(url)
         self.assertEqual(
             response.status_code, 204,
@@ -146,23 +162,4 @@ class SongTest(APITestCase):
         )
 
 
-    def test_list_song(self):
-        """
-        This test ensures that we can list all songs
-        """
-        print("\n Testing list_song ...")
-
-        song1 = audio_files.models.Song.objects.create(name="Micheal Jackson | Beat-it",
-                                                        duration=230,
-                                                        uploadedtime=timezone.now())   
-                                                          
-        song2 = audio_files.models.Song.objects.create(name="Micheal Jackson | Billie Jean",
-                                                        duration=230,
-                                                        uploadedtime=timezone.now())             
-        url = f"/song/"
-
-        response = self.client.get(url)
-        self.assertEqual(
-            response.status_code, 200,
-            msg={'url': url, 'response': response.json()}
-        )
+    
